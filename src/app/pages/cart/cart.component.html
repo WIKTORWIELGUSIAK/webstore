@@ -1,0 +1,103 @@
+<mat-drawer-container class="max-w-7xl mx-auto min-h-[calc(100vh-64px)]">
+  <div class="mt-4 px-8 mx-auto" *ngIf="cart.items.length">
+    <h1>Shopping Cart</h1>
+  </div>
+  <div
+    [ngClass]="{
+      'grid grid-cols-2 gap-4 mx-auto mb-4 px-4': !mobileScreenSize
+    }"
+  >
+    <div>
+      <div
+        *ngFor="let item of cart.items"
+        class="grid gap-2 grid-cols-2 p-5 border-2 border-[#e5e7eb] mt-1 mx-auto"
+      >
+        <div class="flex justify-center items-center">
+          <img src="{{ item.product }}" alt="product" />
+        </div>
+        <div class="flex flex-col justify-between">
+          <div class="flex justify-between">
+            <h3>{{ item.name }}</h3>
+            <button class="mb-auto" (click)="onRemoveFromCart(item)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <h3>Price:</h3>
+            <h3>{{ item.price | currency }}</h3>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <h3>Quantity:</h3>
+            <div class="flex">
+              <button (click)="onRemoveQuantity(item)">
+                <mat-icon>remove_circle_outline</mat-icon>
+              </button>
+              <h3>{{ item.quantity }}</h3>
+              <button (click)="onAddQuantity(item)">
+                <mat-icon>add_circle_outline</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <h3>Total:</h3>
+            <h3>{{ item.quantity * item.price | currency }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      [ngClass]="{
+        'p-0 sticky top-4 h-[300px]': !mobileScreenSize,
+        'p-8': mobileScreenSize
+      }"
+      *ngIf="cart.items.length"
+    >
+      <h1 class="pt-4">SUMMARY</h1>
+      <hr />
+      <div class="pt-4 flex justify-between">
+        <h4>VALUE OF PRODUCTS:</h4>
+        <h4>{{ getTotal(cart.items) | currency }}</h4>
+      </div>
+      <div class="flex justify-between">
+        <h4>DISCOUNT VALUE:</h4>
+        <h4>{{ 0 | currency }}</h4>
+      </div>
+      <div class="flex justify-between">
+        <h4>DELIVERY COST:</h4>
+        <h4>{{ 0 | currency }}</h4>
+      </div>
+      <hr />
+      <div class="pt-5 flex justify-between">
+        <h2>FOR PAYMENT:</h2>
+        <h2>{{ getTotal(cart.items) | currency }}</h2>
+      </div>
+      <!-- <button
+        (click)="onCheckout()"
+        mat-raised-button
+        color="primary"
+        class="w-full"
+      > -->
+      <button
+        (click)="makePayment()"
+        mat-raised-button
+        color="primary"
+        class="w-full"
+      >
+        Proceed to checkout
+      </button>
+    </div>
+  </div>
+  <div *ngIf="!cart.items.length" class="flexrelative min-h-[calc(100vh-64px)]">
+    <div
+      class="flex mx-auto min-h-[calc(100vh-64px)] justify-center items-center"
+    >
+      <h1>Your cart is empty!</h1>
+    </div>
+    <button
+      class="absolute bottom-5 right-5 bg-[#3f51b5] text-white p-3 rounded"
+      routerLink="/home"
+    >
+      Start shopping
+    </button>
+  </div>
+</mat-drawer-container>

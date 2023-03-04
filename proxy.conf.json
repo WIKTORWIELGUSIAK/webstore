@@ -1,0 +1,7 @@
+{
+    "/stripe/*": {
+      "target": "https://checkout.stripe.com",
+      "secure": true,
+      "changeOrigin": true
+    }
+}
