@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { EnvServiceProvider } from './services/env.service.provider';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -56,7 +55,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatSnackBarModule,
     HttpClientModule,
   ],
-  providers: [CartService, StoreService, EnvServiceProvider],
+  providers: [CartService, StoreService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
