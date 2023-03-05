@@ -47,7 +47,7 @@ export class CartComponent implements OnInit {
     private environment: EnvService
   ) {}
   ngOnInit(): void {
-    console.log(this.environment.testEnv);
+    console.log(this.environment.stripeToken);
     this.cartService.cart.subscribe((_cart: Cart) => {
       this.cart = _cart;
       this.dataSource = this.cart.items;
