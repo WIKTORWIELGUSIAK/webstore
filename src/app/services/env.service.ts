@@ -7,4 +7,5 @@ export class EnvService {
   constructor() {}
 
   public stripeToken = 'stripeToken';
+  public testEnv = 'testEnv';
 }
