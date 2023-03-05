@@ -1,17 +1,18 @@
-import { EnvService } from './env.service';
-
-interface MyWindow extends Window {
-  __env: Record<string, string>;
-}
+import { EnvService } from './env.service'; // import environment service
 
 export const EnvServiceFactory = () => {
-  const env = new EnvService();
-  const browserWindow = window as unknown as MyWindow;
-  const browserWindowEnv = browserWindow.__env || {};
+  const env = new EnvService(); // Create env Instance
 
+  // Read environment variables from browser window
+  const browserWindow = window || {};
+  const browserWindowEnv = browserWindow['__env'] || {};
+
+  // Assign environment variables from browser window to env
+  // In the current implementation, properties from env.js overwrite defaults from the EnvService.
+  // If needed, a deep merge can be performed here to merge properties instead of overwriting them.
   for (const key in browserWindowEnv) {
     if (browserWindowEnv.hasOwnProperty(key)) {
-      (env as Record<string, any>)[key] = browserWindowEnv[key];
+      env[key] = window['__env'][key];
     }
   }
 
