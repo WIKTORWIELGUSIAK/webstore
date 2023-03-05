@@ -1,10 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { loadStripe } from '../../../../node_modules/@stripe/stripe-js';
 import { Cart, CartItem } from 'src/app/models/cart.model';
 import { CartService } from 'src/app/services/cart.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { environment } from 'src/environments/environment.development';
+import { EnvService } from 'src/app/services/env.service';
+// import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cart',
@@ -43,7 +43,8 @@ export class CartComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private http: HttpClient,
-    private responsive: BreakpointObserver
+    private responsive: BreakpointObserver,
+    private environment: EnvService
   ) {}
   ngOnInit(): void {
     this.cartService.cart.subscribe((_cart: Cart) => {
@@ -77,9 +78,9 @@ export class CartComponent implements OnInit {
   }
   makePayment() {
     const paymentHandler = (<any>window).StripeCheckout.configure({
-      key: environment.stripeToken,
+      key: this.environment.stripeToken,
       locale: 'auto',
-      token: function (stripeToken: any) {
+      token: function (stripeToken: string) {
         alert('Stripe token generated');
       },
     });
