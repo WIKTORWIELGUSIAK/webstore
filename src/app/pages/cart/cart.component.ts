@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { Cart, CartItem } from 'src/app/models/cart.model';
 import { CartService } from 'src/app/services/cart.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cart',
@@ -45,7 +44,6 @@ export class CartComponent implements OnInit {
     private responsive: BreakpointObserver
   ) {}
   ngOnInit(): void {
-    console.log(environment.stripeToken.stripeToken);
     this.cartService.cart.subscribe((_cart: Cart) => {
       this.cart = _cart;
       this.dataSource = this.cart.items;
@@ -77,7 +75,7 @@ export class CartComponent implements OnInit {
   }
   makePayment() {
     const paymentHandler = (<any>window).StripeCheckout.configure({
-      key: environment.stripeToken.stripeToken,
+      key: 'pk_test_51MgqC7GXNnCDnhTt8Pen7A388ePPccB87wL6OXB7EJuDbfvd16azqGEshYygSJniqHFK9gOnskqRw4KDDWIuQuks00in7lIVO6',
       locale: 'auto',
       token: function (stripeToken: any) {
         alert('Stripe token generated');
